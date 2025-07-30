@@ -1,0 +1,31 @@
+# Jenkins data volume
+jenkins_home/
+
+# Environment files
+.env
+*.env
+
+# Log files
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# IDE specific files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Docker volumes and temporary files
+docker-volumes/
+*.tmp
+
+# Security related
+*.pem
+*.key
+*.crt
+secrets/
