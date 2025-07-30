@@ -2,6 +2,9 @@ FROM jenkins/jenkins:lts
 
 USER root
 
+# Print OS information during build
+RUN cat /etc/os-release
+
 # Install necessary packages
 RUN apt-get update && \
     apt-get install -y \
@@ -19,8 +22,8 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /
     apt-get install -y docker-ce docker-ce-cli containerd.io
 
 # Install kubectl
-RUN curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list && \
+RUN curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | tee /etc/apt/sources.list.d/kubernetes.list && \
     apt-get update && \
     apt-get install -y kubectl
 
