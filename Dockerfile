@@ -27,6 +27,13 @@ RUN curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | gpg --d
     apt-get update && \
     apt-get install -y kubectl
 
+# Install Trivy
+RUN apt-get install wget apt-transport-https gnupg lsb-release -y && \
+    wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | apt-key add - && \
+    echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | tee -a /etc/apt/sources.list.d/trivy.list && \
+    apt-get update && \
+    apt-get install trivy -y
+
 # Add jenkins user to docker group
 RUN usermod -aG docker jenkins
 
